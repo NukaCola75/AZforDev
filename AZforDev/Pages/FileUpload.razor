@@ -1,0 +1,64 @@
+﻿@page "/fileupload"
+@using System.ComponentModel.DataAnnotations
+@using System.IO
+@using System.Linq
+@using System.Threading
+@using Azure.Storage.Blobs
+@using Azure.Storage.Blobs.Models
+@using Azure.Storage
+@using Azure
+
+
+<h3>File Upload Component</h3>
+<label for="browseData"><b>Browse File</b></label>
+<p><InputFile id="browseData" OnChange="@OnInputFileChange" /></p>
+@{
+    var progressCss = "progress " + (displayProgress ? "" : "d-none");
+}
+
+<div class="@progressCss">
+    <div class="progress-bar" role="progressbar" style="@($"width: { progressBar }%")" aria-valuenow="@progressBar" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+
+@code {
+    private bool displayProgress = false;
+    private string result = string.Empty;
+    private string? progressBar;
+    private int maxAllowedSize = 10 * 1024 * 1024;
+    private static string connectionString = "DefaultEndpointsProtocol=https;AccountName=demotp;AccountKey=AUryLQFxxPNrq+yoqT/gwccij4F6CrmvekFVEguYZOjES4RXJjFIfiqPuA9iNgUpcU+38D6khQ3v+AStdUitnw==;EndpointSuffix=core.windows.net";
+    private static string containerName = "containershebbirazfordevtp2"; // Choose an unique name
+    BlobServiceClient blobServiceClient = new BlobServiceClient(connectionString);
+
+    private async Task OnInputFileChange(InputFileChangeEventArgs e)
+    {
+        var maxAllowedFiles = 1;
+
+        var inputFile = e.GetMultipleFiles(maxAllowedFiles).First();
+
+        var container = blobServiceClient.GetBlobContainerClient(containerName);
+
+        var blobUri = new Uri(container.Uri +
+                                  "/upload" + "/" + inputFile.Name);
+
+
+        // AzureSasCredential credential = new AzureSasCredential("");
+        BlobClient blobClient = new BlobClient(connectionString, containerName, inputFile.Name, new BlobClientOptions());
+        displayProgress = true;
+
+        var res = await blobClient.UploadAsync(inputFile.OpenReadStream(maxAllowedSize), new BlobUploadOptions
+            {
+                HttpHeaders = new BlobHttpHeaders { ContentType = inputFile.ContentType },
+                TransferOptions = new StorageTransferOptions
+                {
+                    InitialTransferSize = 1024 * 1024,
+                    MaximumConcurrency = 10
+                },
+                ProgressHandler = new Progress<long>((progress) =>
+                {
+                    progressBar = (100.0 * progress / inputFile.Size).ToString("0");
+
+                })
+
+            });
+    }
+}

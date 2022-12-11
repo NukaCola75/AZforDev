@@ -1,0 +1,65 @@
+﻿@page "/storage"
+@using Azure.Storage.Blobs;
+@using Azure.Storage.Blobs.Models;
+
+<h3>Storage</h3>
+@if (blobContentNames == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    @foreach (String blobContentName in blobContentNames)
+    {
+        <p>@blobContentName</p>
+    }
+}
+
+@code {
+
+    // Retrieve the connection string for use with the application.
+    private static string connectionString = "DefaultEndpointsProtocol=https;AccountName=demotp;AccountKey=AUryLQFxxPNrq+yoqT/gwccij4F6CrmvekFVEguYZOjES4RXJjFIfiqPuA9iNgUpcU+38D6khQ3v+AStdUitnw==;EndpointSuffix=core.windows.net";
+    private static string containerName = "containershebbirazfordevtp2"; // Choose an unique name
+    private List<String>? blobContentNames;
+
+    // Create a BlobServiceClient object
+    BlobServiceClient blobServiceClient = new BlobServiceClient(connectionString);
+
+    private async Task<bool> createContainer()
+    {
+        // Create the container and return a container client object
+        BlobContainerClient containerClient = await blobServiceClient.CreateBlobContainerAsync(containerName);
+        return true;
+    }
+
+    private async Task<bool> checkContainer()
+    {
+        var container = blobServiceClient.GetBlobContainerClient(containerName);
+        await blobServiceClient.GetBlobContainerClient(containerName).CreateIfNotExistsAsync();
+        return true;
+    }
+
+    private async Task<List<string>> listContent()
+    {
+        List<String> contentList = new List<String>();
+        var resultSegment = blobServiceClient.GetBlobContainerClient(containerName).GetBlobsAsync().AsPages();
+        await foreach (Azure.Page<BlobItem> blobPage in resultSegment)
+        {
+            foreach (BlobItem blobItem in blobPage.Values)
+            {
+                Console.WriteLine("Blob name: {0}", blobItem.Name);
+                contentList.Add(blobItem.Name);
+            }
+
+            return contentList;
+        }
+        throw new NullReferenceException();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await checkContainer();
+        blobContentNames = new List<String>();
+        blobContentNames = await listContent();
+    }
+}
