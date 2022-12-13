@@ -14,6 +14,11 @@
       "type": "storage",
       "connectionId": "conSettings",
       "dynamicId": null
+    },
+    "storage3": {
+      "type": "storage",
+      "connectionId": "conStr",
+      "dynamicId": null
     }
   }
 }

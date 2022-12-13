@@ -16,6 +16,13 @@
       "type": "storage.azure",
       "connectionId": "conSettings",
       "dynamicId": null
+    },
+    "storage3": {
+      "secretStore": "LocalSecretsFile",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Storage/storageAccounts/demotp",
+      "type": "storage.azure",
+      "connectionId": "conStr",
+      "dynamicId": null
     }
   }
 }
