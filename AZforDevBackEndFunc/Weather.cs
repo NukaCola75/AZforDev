@@ -29,7 +29,9 @@ namespace AZforDevBackEndFunc
             var response = req.CreateResponse(HttpStatusCode.OK);
             // response.Headers.Add("Content-Type", "application/json; charset=utf-8");
 
+#pragma warning disable CS8604 // Existence possible d'un argument de référence null.
             await response.WriteStringAsync(JsonSerializer.Serialize<WeatherForecast[]>(forecasts));
+#pragma warning restore CS8604 // Existence possible d'un argument de référence null.
 
             return response;
 
