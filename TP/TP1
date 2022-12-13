@@ -1,0 +1,17 @@
+Créer une application blazor web assembly:
+
+Cette application doit afficher le contenu (nom de fichiers . extensions) d'un conteneur blob en faisant appel à une fonction azure.
+C'est donc la fonction Azure qui doit parser le conteneur et retourner un fichier json à l'application blazor.
+Celle-ci doit ensuite l'afficher sur une page dédiée.
+
+L'application doit comporter une page qui permet d'uploader des fichiers vers le conteneur blob.
+C'est l'application elle même qui s'occupe de cette étape.
+
+Une fonctin azure doit observer le conteneur blob et changer le nom des fichiers nouvellement uploadés par un nom aléatoire sur 10 cractères si leur nom complet (nom . extension) est supérieur ou inférieur a 1à caractères.
+
+
+Si on a le temps ____________
+
+Une fonction azure doit observer le conteneur blob et ajouter une entrée en base de données (Mongo ou SQL) comportant le nom du fichiers modifié ainsi que la date et l'heure.
+
+L'application Blazor doit appeler une fonction azure retournant les éléments de la base de données et restituer ces entrées sur une page dédiée
