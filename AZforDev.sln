@@ -7,9 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AZforDev", "AZforDev\AZforD
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AZforDevBackEndFunc", "AZforDevBackEndFunc\AZforDevBackEndFunc.csproj", "{7ED97CA9-2A22-402A-9E52-AACE4D7E7A98}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunctionApp1", "FunctionApp1\FunctionApp1.csproj", "{DDDD64A8-A9C2-4C18-BF60-74D5625E5D95}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FunctionApp1", "FunctionApp1\FunctionApp1.csproj", "{DDDD64A8-A9C2-4C18-BF60-74D5625E5D95}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "reactBlobFunc", "reactBlobFunc\reactBlobFunc.csproj", "{80D2B206-FA0B-4D01-BD45-5970F3DBE5B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "reactBlobFunc", "reactBlobFunc\reactBlobFunc.csproj", "{80D2B206-FA0B-4D01-BD45-5970F3DBE5B0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
