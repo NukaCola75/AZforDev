@@ -27,7 +27,7 @@ namespace AZforDevBackEndFunc
             forecasts = JsonSerializer.Deserialize<WeatherForecast[]>(weatherSample.ReadToEnd());
 
             var response = req.CreateResponse(HttpStatusCode.OK);
-            // response.Headers.Add("Content-Type", "application/json; charset=utf-8");
+            response.Headers.Add("Content-Type", "application/json; charset=utf-8");
 
 #pragma warning disable CS8604 // Existence possible d'un argument de référence null.
             await response.WriteStringAsync(JsonSerializer.Serialize<WeatherForecast[]>(forecasts));
