@@ -35,6 +35,7 @@ namespace AZforDevBackEndFunc
             var documents = _products.AsQueryable().ToList();
 
             var response = req.CreateResponse(HttpStatusCode.OK);
+            response.Headers.Add("Content-Type", "application/json; charset=utf-8");
 
             var json = JsonConvert.SerializeObject(documents);
             await response.WriteStringAsync(json);

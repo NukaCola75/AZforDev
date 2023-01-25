@@ -40,6 +40,7 @@ namespace AZforDevBackEndFunc
             var document = documents.Find(X => X.Id.Contains(str)).ToJson();
 
             var response = req.CreateResponse(HttpStatusCode.OK);
+            response.Headers.Add("Content-Type", "application/json; charset=utf-8");
             // response.Headers.Add("Content-Type", "text/plain; charset=utf-8");
 
             // var json = JsonConvert.SerializeObject(document);
